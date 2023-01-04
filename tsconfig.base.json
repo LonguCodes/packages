@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@longucodes/config": ["packages/config/src/index.ts"],
+      "@longucodes/package-builder": ["packages/package-builder/src/index.ts"],
+      "@longucodes/promise": ["packages/promise/src/index.ts"],
+      "@longucodes/rabbit": ["packages/rabbit/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

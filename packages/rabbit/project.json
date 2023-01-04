@@ -1,0 +1,51 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/rabbit/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/rabbit/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/rabbit"],
+      "options": {
+        "jestConfig": "libs/rabbit/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/rabbit",
+        "tsConfig": "libs/rabbit/tsconfig.lib.json",
+        "packageJson": "libs/rabbit/package.json",
+        "main": "libs/rabbit/src/index.ts",
+        "assets": ["libs/rabbit/*.md"]
+      }
+    },
+    "publish": {
+      "executor": "@longucodes/package-builder:build-and-publish",
+      "options": {
+        "publishArgs": [
+          {
+            "name": "access",
+            "value": "public"
+          },
+          {
+            "name": "no-git-tag-version"
+          },
+          {
+            "name": "no-commit-hooks"
+          }
+        ]
+      }
+    }
+  },
+  "tags": []
+}

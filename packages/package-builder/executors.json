@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "executors": {
+    "build": {
+      "implementation": "./src/executors/build/executor",
+      "schema": "./src/executors/build/schema.json",
+      "description": "build executor"
+    },
+    "build-and-publish": {
+      "implementation": "./src/executors/build-and-publish/executor",
+      "schema": "./src/executors/build-and-publish/schema.json",
+      "description": "build-and-publish executor"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "promise",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/promise/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/promise/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/promise"],
+      "options": {
+        "jestConfig": "libs/promise/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/promise",
+        "tsConfig": "libs/promise/tsconfig.lib.json",
+        "packageJson": "libs/promise/package.json",
+        "main": "libs/promise/src/index.ts",
+        "assets": ["libs/promise/*.md"]
+      }
+    },
+    "publish": {
+      "executor": "@longucodes/package-builder:build-and-publish",
+      "options": {
+        "publishCli": "yarn",
+        "publishArgs": [
+          {
+            "name": "access",
+            "value": "public"
+          },
+          {
+            "name": "no-git-tag-version"
+          },
+          {
+            "name": "no-commit-hooks"
+          }
+        ]
+      }
+    }
+  },
+  "tags": []
+}

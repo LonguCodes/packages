@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "package-builder",
+  "version": "0.0.1",
+  "generators": {
+    "package-builder": {
+      "factory": "./src/generators/package-builder/generator",
+      "schema": "./src/generators/package-builder/schema.json",
+      "description": "package-builder generator"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "cli": "nx",
+  "title": "BuildAndPublish executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "buildScript": {
+      "type": "string",
+      "description": "Name of the build script"
+    },
+    "publishCli": {
+      "type": "string",
+      "enum": [
+        "yarn",
+        "npm"
+      ],
+      "default": "npm"
+    },
+    "publishArgs": {
+      "type": "array",
+      "description": "Arguments for publish command",
+      "items": {
+        "default": [],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    "versionChange": {
+      "default": "patch",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    }
+  },
+  "required": []
+}

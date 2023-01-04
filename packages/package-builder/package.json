@@ -1,0 +1,11 @@
+{
+    "name": "@longucodes/nx-package-builder",
+    "version": "0.0.2",
+    "main": "src/index.js",
+    "generators": "./generators.json",
+    "executors": "./executors.json",
+    "dependencies": {
+        "semver": "^7.3.8",
+        "@nrwl/devkit": "^15.4.4"
+    }
+}

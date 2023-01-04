@@ -1,0 +1,9 @@
+{
+  "name": "@longucodes/config",
+  "version": "0.0.2",
+  "dependencies": {
+    "@nestjs/common": "9",
+    "joi": "17",
+    "dotenv": "10"
+  }
+}

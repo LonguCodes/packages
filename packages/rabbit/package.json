@@ -1,0 +1,11 @@
+{
+  "name": "@longucodes/amqp",
+  "version": "0.0.11",
+  "license": "MIT",
+  "dependencies": {
+    "@nestjs/common": "9.*",
+    "@nestjs/core": "9.*",
+    "amqplib": "^0.10",
+    "uuid": "^9"
+  }
+}
