@@ -1,20 +1,20 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/rabbit/src",
+  "sourceRoot": "packages/rabbit/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/rabbit/**/*.ts"]
+        "lintFilePatterns": ["packages/rabbit/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/rabbit"],
+      "outputs": ["coverage/packages/rabbit"],
       "options": {
-        "jestConfig": "libs/rabbit/jest.config.ts",
+        "jestConfig": "packages/rabbit/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -22,11 +22,11 @@
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/rabbit",
-        "tsConfig": "libs/rabbit/tsconfig.lib.json",
-        "packageJson": "libs/rabbit/package.json",
-        "main": "libs/rabbit/src/index.ts",
-        "assets": ["libs/rabbit/*.md"]
+        "outputPath": "dist/packages/rabbit",
+        "tsConfig": "packages/rabbit/tsconfig.lib.json",
+        "packageJson": "packages/rabbit/package.json",
+        "main": "packages/rabbit/src/index.ts",
+        "assets": ["packages/rabbit/*.md"]
       }
     },
     "publish": {

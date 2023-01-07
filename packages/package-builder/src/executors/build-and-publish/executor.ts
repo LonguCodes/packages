@@ -6,6 +6,23 @@ import * as semver from 'semver';
 import { promisify } from 'util';
 import { exec } from 'child_process';
 
+async function bumpVersion(
+  packagePath: string,
+  versionChange: BuildAndPublishExecutorSchema['versionChange']
+) {
+  const packageJsonRaw = await fs.readFile(packagePath);
+
+  const packageJson = JSON.parse(packageJsonRaw.toString());
+
+  packageJson.version = semver
+    .parse(packageJson.version)
+    .inc(versionChange).version;
+
+  await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 4), {
+    flag: 'w+',
+  });
+}
+
 export default async function executor(
   {
     buildScript = 'build',
@@ -28,25 +45,13 @@ export default async function executor(
     throw new Error(`${buildScript} not in targets`);
   const buildTarget = projectConfiguration.targets[buildScript];
 
-  const packageJsonRaw = await fs.readFile(
-    path.resolve(projectConfiguration.root, 'package.json')
-  );
-
-  const packageJson = JSON.parse(packageJsonRaw.toString());
-
-  packageJson.version = semver
-    .parse(packageJson.version)
-    .inc(versionChange).version;
-
-  await fs.writeFile(
+  await bumpVersion(
     path.resolve(buildTarget.options.outputPath, 'package.json'),
-    JSON.stringify(packageJson, null, 4),
-    { flag: 'w+' }
+    versionChange
   );
-  await fs.writeFile(
+  await bumpVersion(
     path.resolve(projectConfiguration.root, 'package.json'),
-    JSON.stringify(packageJson, null, 4),
-    { flag: 'w+' }
+    versionChange
   );
 
   await promisify(exec)(
