@@ -1,8 +1,4 @@
 {
     "name": "@longucodes/promise",
-    "version": "0.0.3",
-    "dependencies": {
-        "reflect-metadata": "*",
-        "class-transformer": "0.5"
-    }
+    "version": "0.0.5"
 }

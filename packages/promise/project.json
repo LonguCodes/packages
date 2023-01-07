@@ -1,21 +1,21 @@
 {
   "name": "promise",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/promise/src",
+  "sourceRoot": "packages/promise/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/promise/**/*.ts"]
+        "lintFilePatterns": ["packages/promise/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/promise"],
+      "outputs": ["{workspaceRoot}/coverage/packages/promise"],
       "options": {
-        "jestConfig": "libs/promise/jest.config.ts",
+        "jestConfig": "packages/promise/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -23,11 +23,11 @@
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/promise",
-        "tsConfig": "libs/promise/tsconfig.lib.json",
-        "packageJson": "libs/promise/package.json",
-        "main": "libs/promise/src/index.ts",
-        "assets": ["libs/promise/*.md"]
+        "outputPath": "dist/packages/promise",
+        "tsConfig": "packages/promise/tsconfig.lib.json",
+        "packageJson": "packages/promise/package.json",
+        "main": "packages/promise/src/index.ts",
+        "assets": ["packages/promise/*.md"]
       }
     },
     "publish": {

@@ -1,21 +1,21 @@
 {
   "name": "config",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/config/src",
+  "sourceRoot": "packages/config/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/config/**/*.ts"]
+        "lintFilePatterns": ["packages/config/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/config"],
+      "outputs": ["{workspaceRoot}/coverage/packages/config"],
       "options": {
-        "jestConfig": "libs/config/jest.config.ts",
+        "jestConfig": "packages/config/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -23,11 +23,11 @@
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/config",
-        "tsConfig": "libs/config/tsconfig.lib.json",
-        "packageJson": "libs/config/package.json",
-        "main": "libs/config/src/index.ts",
-        "assets": ["libs/config/*.md"]
+        "outputPath": "dist/packages/config",
+        "tsConfig": "packages/config/tsconfig.lib.json",
+        "packageJson": "packages/config/package.json",
+        "main": "packages/config/src/index.ts",
+        "assets": ["packages/config/*.md"]
       }
     },
     "publish": {
