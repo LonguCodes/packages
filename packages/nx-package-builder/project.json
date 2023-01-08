@@ -49,7 +49,7 @@
       }
     },
     "publish": {
-      "executor": "@longucodes/package-builder:build-and-publish",
+      "executor": "@longucodes/nx-package-builder:build-and-publish",
       "options": {
         "publishCli": "yarn",
         "publishArgs": [

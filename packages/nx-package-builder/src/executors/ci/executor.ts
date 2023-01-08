@@ -69,8 +69,6 @@ export default async function executor(
 
   const commitLog = await git.log();
 
-  Logger.info(commitLog);
-
   const latestCommit = commitLog.latest;
   const commitMessage =
     latestCommit.body.length > 0
