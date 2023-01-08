@@ -11,12 +11,10 @@
     },
     "publishCli": {
       "type": "string",
-      "enum": [
-        "yarn",
-        "npm"
-      ],
+      "enum": ["yarn", "npm"],
       "default": "npm"
     },
+
     "publishArgs": {
       "type": "array",
       "description": "Arguments for publish command",
@@ -33,14 +31,6 @@
         },
         "required": ["name"]
       }
-    },
-    "versionChange": {
-      "default": "patch",
-      "enum": [
-        "patch",
-        "minor",
-        "major"
-      ]
     }
   },
   "required": []

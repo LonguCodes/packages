@@ -1,0 +1,45 @@
+{
+  "version": 2,
+  "cli": "nx",
+  "title": "Ci executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "commit": {
+      "type": "boolean",
+      "default": true
+    },
+    "push": {
+      "type": "boolean",
+      "default": true
+    },
+    "publish": {
+      "type": "boolean",
+      "default": true
+    },
+    "tag": {
+      "type": "boolean",
+      "default": true
+    },
+    "tagDelimiter": {
+      "type": "string",
+      "default": "||"
+    },
+    "versionBumpPattern": {
+      "patternProperties": {
+        "^.*$": {
+          "enum": ["patch", "minor", "major"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "noCiMessage": {
+      "type": "string"
+    },
+    "publishScript": {
+      "type": "string",
+      "default": "publish"
+    }
+  },
+  "required": []
+}

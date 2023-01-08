@@ -16,7 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@longucodes/config": ["packages/config/src/index.ts"],
-      "@longucodes/package-builder": ["packages/package-builder/src/index.ts"],
+      "@longucodes/nx-package-builder": [
+        "packages/nx-package-builder/src/index.ts"
+      ],
       "@longucodes/promise": ["packages/promise/src/index.ts"],
       "@longucodes/rabbit": ["packages/rabbit/src/index.ts"]
     }

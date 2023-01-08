@@ -10,6 +10,11 @@
       "implementation": "./src/executors/build-and-publish/executor",
       "schema": "./src/executors/build-and-publish/schema.json",
       "description": "build-and-publish executor"
+    },
+    "ci": {
+      "implementation": "./src/executors/ci/executor",
+      "schema": "./src/executors/ci/schema.json",
+      "description": "ci executor"
     }
   }
 }

@@ -9,11 +9,14 @@
     "@nestjs/core": "^9.2.1",
     "@swc/helpers": "~0.4.11",
     "amqplib": "^0.10.3",
+    "chalk": "4",
     "class-transformer": "^0.5.1",
     "joi": "^17.7.0",
+    "nx": "^15.4.5",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "semver": "^7.3.8",
+    "simple-git": "^3.15.1",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
@@ -40,7 +43,6 @@
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "jsonc-eslint-parser": "^2.1.0",
-    "nx": "^15.4.4",
     "prettier": "^2.6.2",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
