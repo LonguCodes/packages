@@ -68,7 +68,14 @@ export default async function executor(
   const git = simpleGit();
 
   const commitLog = await git.log();
-  const commitMessage = commitLog.latest.message;
+
+  Logger.info(commitLog);
+
+  const latestCommit = commitLog.latest;
+  const commitMessage =
+    latestCommit.body.length > 0
+      ? latestCommit.message + '\n' + latestCommit.body
+      : latestCommit.message;
 
   const { scopes, type, breaking } = parseCommit(commitMessage);
 
