@@ -105,6 +105,9 @@ export default async function executor(
     path.resolve(context.workspace.projects[scope].root, 'package.json')
   );
 
+  await git.addConfig('user.email', 'ci@ci.com');
+  await git.addConfig('user.name', 'ci');
+
   if (commit) {
     await git.add(packageJsonFiles);
     await git.commit(
