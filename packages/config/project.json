@@ -33,6 +33,7 @@
     "publish": {
       "executor": "@longucodes/package-builder:build-and-publish",
       "options": {
+        "publishCli": "yarn",
         "publishArgs": [
           {
             "name": "access",

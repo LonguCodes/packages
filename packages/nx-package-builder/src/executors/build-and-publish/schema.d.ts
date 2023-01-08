@@ -1,3 +1,5 @@
+import { VersionChangeEnum } from '../../common/version-change.enum';
+
 interface PublishArg {
   name: string;
   value?: string;
@@ -7,5 +9,5 @@ export interface BuildAndPublishExecutorSchema {
   buildScript?: string;
   publishArgs?: PublishArg[];
   publishCli?: 'yarn' | 'npm';
-  versionChange?: 'patch' | 'minor' | 'major';
+  dry?: boolean;
 } // eslint-disable-line

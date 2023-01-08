@@ -1,35 +1,35 @@
 {
-  "name": "package-builder",
+  "name": "nx-package-builder",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/package-builder/src",
+  "sourceRoot": "packages/nx-package-builder/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/package-builder",
-        "main": "packages/package-builder/src/index.ts",
-        "tsConfig": "packages/package-builder/tsconfig.lib.json",
+        "outputPath": "dist/packages/nx-package-builder",
+        "main": "packages/nx-package-builder/src/index.ts",
+        "tsConfig": "packages/nx-package-builder/tsconfig.lib.json",
         "assets": [
-          "packages/package-builder/*.md",
+          "packages/nx-package-builder/*.md",
           {
-            "input": "./packages/package-builder/src",
+            "input": "./packages/nx-package-builder/src",
             "glob": "**/!(*.ts)",
             "output": "./src"
           },
           {
-            "input": "./packages/package-builder/src",
+            "input": "./packages/nx-package-builder/src",
             "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./packages/package-builder",
+            "input": "./packages/nx-package-builder",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./packages/package-builder",
+            "input": "./packages/nx-package-builder",
             "glob": "executors.json",
             "output": "."
           }
@@ -41,10 +41,10 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "packages/package-builder/**/*.ts",
-          "packages/package-builder/generators.json",
-          "packages/package-builder/executors.json",
-          "packages/package-builder/package.json"
+          "packages/nx-package-builder/**/*.ts",
+          "packages/nx-package-builder/generators.json",
+          "packages/nx-package-builder/executors.json",
+          "packages/nx-package-builder/package.json"
         ]
       }
     },
