@@ -20,7 +20,7 @@ jobs:
       - name: Setup NX workspace SHAs
         uses: nrwl/nx-set-shas@v3
         with:
-          main-branch-name: develop
+          main-branch-name: master
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
