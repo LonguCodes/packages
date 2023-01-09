@@ -1,13 +1,13 @@
 {
-  "name": "@longucodes/nx-package-builder",
-  "version": "0.0.16",
-  "main": "src/index.js",
-  "generators": "./generators.json",
-  "executors": "./executors.json",
-  "dependencies": {
-    "semver": "^7.3.8",
-    "@nrwl/devkit": "^15.4.4",
-    "simple-git": "^3",
-    "chalk": "4"
-  }
+    "name": "@longucodes/nx-package-builder",
+    "version": "0.0.17",
+    "main": "src/index.js",
+    "generators": "./generators.json",
+    "executors": "./executors.json",
+    "dependencies": {
+        "semver": "^7.3.8",
+        "@nrwl/devkit": "^15.4.4",
+        "simple-git": "^3",
+        "chalk": "4"
+    }
 }
