@@ -67,9 +67,11 @@ export default async function executor(
 
   const git = simpleGit();
 
-  Logger.info(`Currently on branch ${(await git.branch()).current}`);
+  const currentBranch = (await git.branch()).current;
 
-  await git.pull();
+  Logger.info(`Currently on branch ${currentBranch}`);
+
+  await git.fetch(`origin/${currentBranch}`);
 
   const commitLog = await git.log();
 
