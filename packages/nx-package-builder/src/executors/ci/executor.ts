@@ -70,8 +70,9 @@ export default async function executor(
   const currentBranch = (await git.branch()).current;
 
   Logger.info(`Currently on branch ${currentBranch}`);
-
-  await git.fetch(`origin/${currentBranch}`);
+  await git.fetch(`origin`);
+  await git.checkout(currentBranch);
+  await git.pull(`origin`, currentBranch);
 
   const commitLog = await git.log();
 
