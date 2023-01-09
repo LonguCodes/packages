@@ -17,7 +17,7 @@ function parseCommit(message: string) {
 
   const scope = header.match(/^[^(:]+\((.*)\)/);
   const type = header.match(/^([^(:]+)[(:]/)[1];
-  const subject = header.match(/^[^(:]+\(.*\):\s*(.*)/)[1];
+  const subject = header.match(/^[^(:]+(?:\(.*\))?:\s*(.*)/)[1];
   return {
     type,
     scopes: scope ? scope[1].split(',').map((scope) => scope.trim()) : null,
