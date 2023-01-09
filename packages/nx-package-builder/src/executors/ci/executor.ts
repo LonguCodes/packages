@@ -67,6 +67,8 @@ export default async function executor(
 
   const git = simpleGit();
 
+  Logger.info(`Currently on branch ${(await git.branch()).current}`);
+
   const commitLog = await git.log();
 
   const latestCommit = commitLog.latest;
@@ -111,6 +113,7 @@ export default async function executor(
     await git.commit(
       `${noCiMessage ?? ''} ci(${scopes.join(',')}): Bumped version of packages`
     );
+    Logger.info('Added new commit');
   } else {
     Logger.info('Dry run, skipping commit');
     Logger.info(`Would commit ${packageJsonFiles.join('\n')}`);
@@ -132,6 +135,7 @@ export default async function executor(
       Logger.warn('No commit, skipping push');
     } else {
       await git.push(['--tags']);
+      Logger.info('Pushed tags and commits');
     }
   }
   if (publish) {
