@@ -69,6 +69,8 @@ export default async function executor(
 
   Logger.info(`Currently on branch ${(await git.branch()).current}`);
 
+  await git.pull();
+
   const commitLog = await git.log();
 
   const latestCommit = commitLog.latest;
