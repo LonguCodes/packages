@@ -119,7 +119,7 @@ export default async function executor(
     if (!commit) {
       Logger.warn('No commit, skipping push');
     } else {
-      await git.push(['--tags']);
+      await git.push(['--follow-tags']);
       Logger.info('Pushed tags and commits');
     }
   }
