@@ -37,5 +37,8 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
+      - name: Login to npm
+        run: echo "${{ secrets.NPM_AUTH }}" >> .npmrc
+
       - name: 'Build affected apps'
         run: yarn nx ci ci
