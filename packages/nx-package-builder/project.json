@@ -25,11 +25,6 @@
           },
           {
             "input": "./packages/nx-package-builder",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/nx-package-builder",
             "glob": "executors.json",
             "output": "."
           }
@@ -42,7 +37,6 @@
       "options": {
         "lintFilePatterns": [
           "packages/nx-package-builder/**/*.ts",
-          "packages/nx-package-builder/generators.json",
           "packages/nx-package-builder/executors.json",
           "packages/nx-package-builder/package.json"
         ]
@@ -64,6 +58,12 @@
             "name": "no-commit-hooks"
           }
         ]
+      }
+    },
+    "ci": {
+      "executor": "@longucodes/nx-package-builder:ci",
+      "options": {
+        "noCiMessage": "[skip ci]"
       }
     }
   },

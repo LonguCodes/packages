@@ -77,57 +77,42 @@ export default async function executor(
       ? latestCommit.message + '\n' + latestCommit.body
       : latestCommit.message;
 
-  const { scopes, type, breaking } = parseCommit(commitMessage);
-
-  const projectNames = Object.keys(context.workspace.projects);
-
-  scopes.forEach((scope) => {
-    if (!projectNames.includes(scope))
-      throw new Error(`Project ${scope} does not exist`);
-  });
+  const { type, breaking } = parseCommit(commitMessage);
 
   const change = breaking
     ? VersionChangeEnum.major
     : versionBumpPattern[type] ?? VersionChangeEnum.patch;
 
-  const versionChanges = {};
-
-  for (const scope of scopes) {
-    const newVersion = await bumpVersion(
-      path.resolve(context.workspace.projects[scope].root, 'package.json'),
-      change
-    );
-    Logger.info(`Bumped version of ${scope} to ${newVersion}`);
-    versionChanges[scope] = newVersion;
-  }
-
-  const packageJsonFiles = scopes.map((scope) =>
-    path.resolve(context.workspace.projects[scope].root, 'package.json')
+  const packageJsonPath = path.resolve(
+    context.workspace.projects[context.projectName].root,
+    'package.json'
   );
+
+  const newVersion = await bumpVersion(packageJsonPath, change);
+  Logger.info(`Bumped version  to ${newVersion}`);
 
   await git.addConfig('user.email', 'ci@ci.com');
   await git.addConfig('user.name', 'ci');
 
   if (commit) {
-    await git.add(packageJsonFiles);
+    await git.add(packageJsonPath);
     await git.commit(
-      `${noCiMessage ?? ''} ci(${scopes.join(',')}): Bumped version of packages`
+      `${noCiMessage ?? ''} ci(${
+        context.projectName
+      }): Bumped version of packages`
     );
     Logger.info('Added new commit');
   } else {
     Logger.info('Dry run, skipping commit');
-    Logger.info(`Would commit ${packageJsonFiles.join('\n')}`);
   }
 
   if (tag) {
     if (!commit) {
       Logger.warn('No commit, skipping tagging');
     } else {
-      for (const scope of scopes) {
-        const tagName = `${scope}${tagDelimiter}${versionChanges[scope]}`;
-        await git.addTag(tagName);
-        Logger.info(`Added tag ${tagName}`);
-      }
+      const tagName = `${context.projectName}${tagDelimiter}${newVersion}`;
+      await git.addTag(tagName);
+      Logger.info(`Added tag ${tagName}`);
     }
   }
   if (push) {
@@ -139,17 +124,15 @@ export default async function executor(
     }
   }
   if (publish) {
-    for (const scope of scopes) {
-      await runNxTask(
-        {
-          project: scope,
-          target: publishScript,
-        },
-        {},
-        context
-      );
-      Logger.info(`Published ${scope}`);
-    }
+    await runNxTask(
+      {
+        project: context.projectName,
+        target: publishScript,
+      },
+      {},
+      context
+    );
+    Logger.info(`Published ${context.projectName}`);
   }
   return {
     success: true,
