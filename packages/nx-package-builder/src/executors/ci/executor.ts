@@ -89,7 +89,7 @@ export default async function executor(
   );
 
   const newVersion = await bumpVersion(packageJsonPath, change);
-  Logger.info(`Bumped version  to ${newVersion}`);
+  Logger.info(`Bumped version to ${newVersion}`);
 
   await git.addConfig('user.email', 'ci@ci.com');
   await git.addConfig('user.name', 'ci');
