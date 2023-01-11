@@ -7,6 +7,7 @@ import { VersionChangeEnum } from '../../common/version-change.enum';
 import * as path from 'path';
 import { Logger } from '../../common/logger';
 import { runNxTask } from '../../common/run-nx-task';
+import * as process from 'process';
 
 function parseCommit(message: string) {
   const lines = message.split('\n');
@@ -129,6 +130,7 @@ export default async function executor(
     }
   }
   if (publish) {
+    process.env.NX_PUBLISH_VERSION = newVersion;
     await runNxTask(
       {
         project: context.projectName,
