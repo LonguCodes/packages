@@ -15,9 +15,19 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@longucodes/common": ["packages/common/src/index.ts"],
       "@longucodes/config": ["packages/config/src/index.ts"],
       "@longucodes/nx-package-builder": [
         "packages/nx-package-builder/src/index.ts"
+      ],
+      "@longucodes/plugin-system-cli": [
+        "packages/plugin-system-cli/src/index.ts"
+      ],
+      "@longucodes/plugin-system-core": [
+        "packages/plugin-system-core/src/index.ts"
+      ],
+      "@longucodes/plugin-system-loader": [
+        "packages/plugin-system-loader/src/index.ts"
       ],
       "@longucodes/promise": ["packages/promise/src/index.ts"],
       "@longucodes/rabbit": ["packages/rabbit/src/index.ts"]

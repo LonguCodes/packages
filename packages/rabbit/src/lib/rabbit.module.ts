@@ -16,9 +16,9 @@ import { v4 } from 'uuid';
 import { MESSAGE_KEY } from './decorators/message.decorator';
 import { ParseFailedError } from './errors/parse-failed.error';
 import { PUBLISH_KEY, PubOptions } from './decorators/publish.decorator';
-import { ModuleOptionsFactory } from './types';
 import { QueueConfigMissingError } from './errors/queue-config-missing.error';
 import { RABBIT_CHANNEL_KEY, RABBIT_CONNECTION_KEY } from './tokens';
+import { ModuleOptionsFactory } from '@longucodes/common';
 
 export interface RabbitModuleExchange {
   name: string;

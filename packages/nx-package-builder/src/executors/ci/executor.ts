@@ -5,9 +5,9 @@ import * as fs from 'fs/promises';
 import * as semver from 'semver';
 import { VersionChangeEnum } from '../../common/version-change.enum';
 import * as path from 'path';
-import { Logger } from '../../common/logger';
 import { runNxTask } from '../../common/run-nx-task';
 import * as process from 'process';
+import { Logger } from '@longucodes/common';
 
 function parseCommit(message: string) {
   const lines = message.split('\n');

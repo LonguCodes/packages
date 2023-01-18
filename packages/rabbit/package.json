@@ -1,5 +1,13 @@
 {
     "name": "@longucodes/amqp",
     "version": "0.0.15",
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+      "@nestjs/core": "^9.2.1",
+      "@nestjs/common": "^9.2.1",
+      "amqplib": "^0.10.3",
+      "uuid": "^9.0.0",
+      "@longucodes/common": "^0.0.1"
+
+    }
 }
