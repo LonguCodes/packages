@@ -1,6 +1,6 @@
 {
     "name": "@longucodes/plugin-system-loader",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "dependencies": {
         "@longucodes/plugin-system-core": "^0.0.1",
         "@nestjs/common": "^9.2.1"
