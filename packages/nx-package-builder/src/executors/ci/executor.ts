@@ -7,7 +7,7 @@ import { VersionChangeEnum } from '../../common/version-change.enum';
 import * as path from 'path';
 import { runNxTask } from '../../common/run-nx-task';
 import * as process from 'process';
-import {Logger} from "@longucodes/common";
+import { Logger } from '@longucodes/common';
 
 function parseCommit(message: string) {
   const lines = message.split('\n');
