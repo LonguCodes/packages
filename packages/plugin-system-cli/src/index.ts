@@ -17,11 +17,10 @@ async function checkIfInstalled(definition: PluginDefinition) {
 }
 
 program
-  // .argument('<command>', 'Command to execute')
+  .argument('<command>', 'Command to execute')
   .option('-p, --pluginsPath <path>')
-  .action(async ({ path = './plugins.json' }) => {
+  .action(async (command, { path = './plugins.json' }) => {
     Logger.info('Loading plugin definitions file');
-    const command = 'echo "beep"';
     const fileExists = await fs.access(path).then(
       () => true,
       () => false
