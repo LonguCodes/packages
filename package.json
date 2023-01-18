@@ -9,7 +9,7 @@
     "@nestjs/core": "^9.2.1",
     "@swc/helpers": "~0.4.11",
     "amqplib": "^0.10.3",
-    "chalk": "^5.2.0",
+    "chalk": "4",
     "class-transformer": "^0.5.1",
     "commander": "^10.0.0",
     "joi": "^17.7.0",

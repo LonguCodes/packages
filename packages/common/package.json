@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "@nestjs/common": "^9.2.1",
-    "chalk": "^5.2.0"
+    "chalk": "^4.1.2"
   }
 }
