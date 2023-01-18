@@ -1,6 +1,6 @@
 {
     "name": "@longucodes/config",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "dependencies": {
         "@nestjs/common": "9.2.1",
         "joi": "17.7.0",
