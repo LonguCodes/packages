@@ -1,12 +1,12 @@
 {
-  "name": "@longucodes/plugin-system-cli",
-  "version": "0.0.2",
-  "dependencies": {
-    "commander": "^10.0.0",
-    "@longucodes/common": "^0.0.3",
-    "@longucodes/plugin-system-core": "^0.0.3"
-  },
-  "bin": {
-    "plugins-cli": "./src/index.js"
-  }
+    "name": "@longucodes/plugin-system-cli",
+    "version": "0.0.3",
+    "dependencies": {
+        "commander": "^10.0.0",
+        "@longucodes/common": "^0.0.3",
+        "@longucodes/plugin-system-core": "^0.0.3"
+    },
+    "bin": {
+        "plugins-cli": "./src/index.js"
+    }
 }
