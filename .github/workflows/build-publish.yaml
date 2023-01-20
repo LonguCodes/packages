@@ -50,8 +50,9 @@ jobs:
           NX_AFFECTED_FILES=`git diff $NX_BASE --name-only | sort | uniq | tr '\n' ','`
           git cherry-pick --abort || true
           git checkout $NX_CURRENT_BRANCH
-          export NX_BASE=''
-          export NX_HEAD=''
-
-      - name: 'Build affected apps'
-        run:  yarn nx affected --target=ci --parallel=1 --files="$NX_AFFECTED_FILES"
+          echo "NX_BASE=''" >> $GITHUB_ENV
+          echo "NX_HEAD=''" >> $GITHUB_ENV
+          echo "NX_AFFECTED_FILES=$NX_AFFECTED_FILES" >> $GITHUB_ENV
+          echo "Affected files: $NX_AFFECTED_FILES"
+#      - name: 'Build affected apps'
+#        run:  yarn nx affected --target=ci --parallel=1 --files="$NX_AFFECTED_FILES" --no-publish --no-commit
