@@ -44,7 +44,7 @@ jobs:
       - name: Compute actually changed files
         run: |
           git cherry-pick --abort || true
-          git cherry-pick `git log  $NX_BASE..$NX_HEAD --grep='\[skip ci\]' --grep '[Mm]erge' --invert-grep  --pretty="%H" | tr '\n' ' '`
+          git cherry-pick `git log  $NX_BASE..$NX_HEAD --grep='\[skip ci\]' --grep '[Mm]erge' --invert-grep  --pretty="%H" | tr '\n' ' '` || true
           NX_AFFECTED_FILES=`git diff --name-only | sort | uniq | tr '\n' ','`
           git cherry-pick --abort
 
