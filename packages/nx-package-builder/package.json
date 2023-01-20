@@ -1,6 +1,6 @@
 {
     "name": "@longucodes/nx-package-builder",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "main": "src/index.js",
     "executors": "./executors.json",
     "dependencies": {
