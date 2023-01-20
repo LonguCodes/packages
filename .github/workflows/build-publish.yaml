@@ -54,5 +54,5 @@ jobs:
           echo "NX_HEAD=''" >> $GITHUB_ENV
           echo "NX_AFFECTED_FILES=$NX_AFFECTED_FILES" >> $GITHUB_ENV
           echo "Affected files: $NX_AFFECTED_FILES"
-#      - name: 'Build affected apps'
-#        run:  yarn nx affected --target=ci --parallel=1 --files="$NX_AFFECTED_FILES" --no-publish --no-commit
+      - name: 'Build affected apps'
+        run:  yarn nx affected --target=ci --parallel=1 --files="$NX_AFFECTED_FILES"
