@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { program } from 'commander';
 import { Logger } from '@longucodes/common';
 import * as fs from 'fs/promises';
