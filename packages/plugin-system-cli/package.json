@@ -1,6 +1,6 @@
 {
     "name": "@longucodes/plugin-system-cli",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "dependencies": {
         "commander": "^10.0.0",
         "@longucodes/common": "^0.0.3",
