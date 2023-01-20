@@ -44,9 +44,14 @@ jobs:
       - name: Compute actually changed files
         run: |
           git cherry-pick --abort || true
-          git cherry-pick `git log  $NX_BASE..$NX_HEAD --grep='\[skip ci\]' --grep '[Mm]erge' --invert-grep  --pretty="%H" | tr '\n' ' '` || true
+          export NX_CURRENT_BRANCH=`git branch --show-current`
+          git checkout $NX_BASE
+          git cherry-pick `git log  $NX_BASE..$NX_HEAD --grep='\[skip ci\]' --invert-grep  --pretty="%H" | tr '\n' ' '` || true
           NX_AFFECTED_FILES=`git diff --name-only | sort | uniq | tr '\n' ','`
           git cherry-pick --abort
+          git checkout $NX_CURRENT_BRANCH
+          export NX_BASE=''
+          export NX_HEAD=''
 
       - name: 'Build affected apps'
         run:  yarn nx affected --target=ci --parallel=1 --files="$NX_AFFECTED_FILES"

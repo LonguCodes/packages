@@ -39,3 +39,4 @@ testem.log
 Thumbs.db
 
 plugins.json
+.npmrc
