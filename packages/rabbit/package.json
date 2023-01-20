@@ -1,6 +1,6 @@
 {
     "name": "@longucodes/amqp",
-    "version": "0.0.18",
+    "version": "0.0.19",
     "license": "MIT",
     "dependencies": {
         "@nestjs/core": "^9.2.1",
