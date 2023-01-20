@@ -23,6 +23,7 @@
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "outputPath": "dist/packages/plugin-system-core",
         "tsConfig": "packages/plugin-system-core/tsconfig.lib.json",
         "packageJson": "packages/plugin-system-core/package.json",

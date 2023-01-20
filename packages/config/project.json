@@ -24,6 +24,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/config",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "tsConfig": "packages/config/tsconfig.lib.json",
         "packageJson": "packages/config/package.json",
         "main": "packages/config/src/index.ts",

@@ -8,6 +8,7 @@
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "outputPath": "dist/packages/nx-package-builder",
         "main": "packages/nx-package-builder/src/index.ts",
         "tsConfig": "packages/nx-package-builder/tsconfig.lib.json",

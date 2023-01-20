@@ -22,6 +22,8 @@
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+
         "outputPath": "dist/packages/rabbit",
         "tsConfig": "packages/rabbit/tsconfig.lib.json",
         "packageJson": "packages/rabbit/package.json",
