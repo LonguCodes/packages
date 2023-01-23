@@ -2,5 +2,10 @@
     "name": "@longucodes/nx-package-builder",
     "version": "1.0.11",
     "main": "src/index.js",
-    "executors": "./executors.json"
+    "executors": "./executors.json",
+    "dependencies": {
+        "nx": "15.x",
+        "chalk": "4",
+        "@nestjs/common": "9.2"
+    }
 }

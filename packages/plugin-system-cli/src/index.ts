@@ -20,8 +20,17 @@ async function checkIfInstalled(definition: PluginDefinition) {
 
 program
   .argument('<command>', 'Command to execute')
-  .option('-p, --pluginsPath <path>')
-  .action(async (command, { path = './plugins.json' }) => {
+  .option(
+    '-p, --pluginsPath <path>',
+    'Path to plugin definitions',
+    'plugins.json'
+  )
+  .option(
+    '-c, --cli <cli command>',
+    'Installation cli used to install plugins',
+    'npm install'
+  )
+  .action(async (command, { path, cli }) => {
     Logger.info('Loading plugin definitions file');
     const fileExists = await fs.access(path).then(
       () => true,
@@ -56,7 +65,7 @@ program
         Logger.info(`Installing...`);
 
         await promisify(child_process.exec)(
-          `npm install ${missingPlugins.join(' ')}`
+          `${cli} ${missingPlugins.join(' ')}`
         );
 
         Logger.info('Plugins successfully installed');

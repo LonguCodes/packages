@@ -3,5 +3,9 @@
     "version": "0.0.8",
     "bin": {
         "plugins-cli": "./src/index.js"
-    }
+    },
+  "dependencies": {
+    "chalk": "4.x",
+    "@nestjs/common": "9.2.x"
+  }
 }
