@@ -30,9 +30,10 @@ program
     'Installation cli used to install plugins',
     'npm install'
   )
-  .action(async (command, { path, cli }) => {
+  .showHelpAfterError(true)
+  .action(async (command, { pluginsPath, cli }) => {
     Logger.info('Loading plugin definitions file');
-    const fileExists = await fs.access(path).then(
+    const fileExists = await fs.access(pluginsPath).then(
       () => true,
       () => false
     );
@@ -43,7 +44,7 @@ program
     } else {
       let plugins: PluginDefinition[] = [];
       try {
-        plugins = JSON.parse((await fs.readFile(path)).toString());
+        plugins = JSON.parse((await fs.readFile(pluginsPath)).toString());
       } catch (e) {
         Logger.error('Plugins file malformed, skipping');
       }
