@@ -28,7 +28,8 @@
         "tsConfig": "packages/plugin-system-cli/tsconfig.lib.json",
         "packageJson": "packages/plugin-system-cli/package.json",
         "main": "packages/plugin-system-cli/src/index.ts",
-        "assets": ["packages/plugin-system-cli/*.md"]
+        "assets": ["packages/plugin-system-cli/*.md"],
+        "clean": true
       }
     },
     "run": {
