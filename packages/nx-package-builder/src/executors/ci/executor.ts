@@ -16,6 +16,9 @@ function parseCommit(message: string) {
 
   const header = lines[0];
 
+  if (!header.match(/^([^(:]+)[(:]/))
+    throw new Error('Message does not match conventional commit');
+
   const scope = header.match(/^[^(:]+\((.*)\)/);
   const type = header.match(/^([^(:]+)[(:]/)[1];
   const subject = header.match(/^[^(:]+(?:\(.*\))?:\s*(.*)/)[1];
