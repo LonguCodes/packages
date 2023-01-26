@@ -10,6 +10,7 @@ export interface PluginModuleOptions {
 @Module({})
 export class PluginModule {
   private static resolveConfig(config: Record<string, any>) {
+    if (!config) return {};
     const envEntries = Object.entries(config)
       .filter(
         ([_, value]) => typeof value === 'string' && value.match(/^\$[A-Z_]*$/)
@@ -33,7 +34,10 @@ export class PluginModule {
 
     try {
       const nodeModule = await import(name);
-      return 'forRoot' in nodeModule ? nodeModule.forRoot(config) : nodeModule;
+      const nestModuleClass = nodeModule.default;
+      return 'forRoot' in nestModuleClass
+        ? nestModuleClass.forRoot(config)
+        : nestModuleClass;
     } catch (e) {
       Logger.error(`Failed to load ${name}. Is it installed?`, 'Plugin');
       return null;
