@@ -16,8 +16,10 @@ function parseCommit(message: string) {
 
   const header = lines[0];
 
-  if (!header.match(/^([^(:]+)[(:]/))
-    throw new Error('Message does not match conventional commit');
+  if (!header.match(/^[^(:]+(?:\([^)]+\))?:.*/)) {
+    Logger.warn('Unable to parse commit according to conventional commit');
+    return {};
+  }
 
   const scope = header.match(/^[^(:]+\((.*)\)/);
   const type = header.match(/^([^(:]+)[(:]/)[1];
@@ -86,7 +88,7 @@ export default async function executor(
       ? latestCommit.message + '\n' + latestCommit.body
       : latestCommit.message;
 
-  const { type, breaking } = parseCommit(commitMessage);
+  const { type = 'unknown', breaking = false } = parseCommit(commitMessage);
 
   const change = breaking
     ? VersionChangeEnum.major
