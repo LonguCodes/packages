@@ -6,7 +6,7 @@ export type PluginDefinition<
 > =
   | {
       version?: string;
-      mode: 'static' | 'dynamic';
+      mode?: 'static' | 'dynamic';
       name: string;
       config?: T;
     }
