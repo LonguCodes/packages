@@ -9,7 +9,7 @@ import { promisify } from 'util';
 async function checkIfInstalled(definition: PluginDefinition) {
   const isStringDefinition = typeof definition === 'string';
   const name = isStringDefinition ? definition : definition.name;
-
+  if (!isStringDefinition && definition.mode === 'dynamic') return true;
   try {
     await import(name);
     return true;
