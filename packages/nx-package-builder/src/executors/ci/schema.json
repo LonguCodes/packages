@@ -21,9 +21,9 @@
       "type": "boolean",
       "default": true
     },
-    "tagDelimiter": {
+    "baseCommit": {
       "type": "string",
-      "default": "||"
+      "default": "HEAD~1"
     },
     "versionBumpPattern": {
       "patternProperties": {
