@@ -21,6 +21,10 @@
       "type": "boolean",
       "default": true
     },
+    "tagDelimiter": {
+      "type": "string",
+      "default": "||"
+    },
     "baseCommit": {
       "type": "string",
       "default": "HEAD~1"
