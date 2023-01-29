@@ -25,6 +25,10 @@
       "type": "string",
       "default": "||"
     },
+    "baseCommit": {
+      "type": "string",
+      "default": "HEAD~1"
+    },
     "versionBumpPattern": {
       "patternProperties": {
         "^.*$": {

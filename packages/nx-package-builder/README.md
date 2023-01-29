@@ -80,7 +80,10 @@ The full configuration consists of following options:
 - `publishCli` - cli used for publishing, default `npm`
 - `noCiMessage` - additional message added in front of the commit, used for disabling CI run for this commit
 - `versionBumpPattern` - pattern of bumping the version depending on the commit type, default `{feat: minor}`
+- `baseCommit` - base commit to reference for proper bump type checking, default `HEAD~1`
 
+
+:warning: Running the command without providing `baseCommit` or `NX_BASE` environment variable will lead to inconsistent version bumping :warning:
 
 By default, every commit type will be considered a `patch` bump, except commit of `feat` type, which will bump `minor` and commits containing the words `BREAKING CHANGE`, which will bump `major`
 

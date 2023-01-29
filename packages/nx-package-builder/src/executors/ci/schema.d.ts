@@ -9,4 +9,5 @@ export interface CiExecutorSchema {
   versionBumpPattern: Record<string, VersionChangeEnum>;
   noCiMessage?: string;
   publishScript?: string;
+  baseCommit?: string;
 } // eslint-disable-line

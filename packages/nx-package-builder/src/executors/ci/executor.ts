@@ -1,6 +1,6 @@
 import { CiExecutorSchema } from './schema';
 import { ExecutorContext } from '@nrwl/devkit';
-import simpleGit from 'simple-git';
+import simpleGit, { DefaultLogFields } from 'simple-git';
 import * as fs from 'fs/promises';
 import * as semver from 'semver';
 import { VersionChangeEnum } from '../../common/version-change.enum';
@@ -8,31 +8,8 @@ import * as path from 'path';
 import { runNxTask } from '../../common/run-nx-task';
 import * as process from 'process';
 import { Logger } from '@longucodes/common';
-
-function parseCommit(message: string) {
-  const lines = message.split('\n');
-  const merge = lines[0].match(/^Merge/i) ? lines[0] : null;
-  if (merge) lines.splice(0, 1);
-
-  const header = lines[0];
-
-  if (!header.match(/^[^(:]+(?:\([^)]+\))?:.*/)) {
-    Logger.warn('Unable to parse commit according to conventional commit');
-    return {};
-  }
-
-  const scope = header.match(/^[^(:]+\((.*)\)/);
-  const type = header.match(/^([^(:]+)[(:]/)[1];
-  const subject = header.match(/^[^(:]+(?:\(.*\))?:\s*(.*)/)[1];
-  return {
-    type,
-    scopes: scope ? scope[1].split(',').map((scope) => scope.trim()) : null,
-    subject,
-    merge,
-    description: lines.slice(1),
-    breaking: !!lines.find((line) => line.match(/BREAKING CHANGE/)),
-  };
-}
+import { getVersionBump, parseCommit } from './commit-utils';
+import { program } from 'commander';
 
 const defaultVersionBump: Record<string, VersionChangeEnum> = {
   feat: VersionChangeEnum.minor,
@@ -66,10 +43,13 @@ export default async function executor(
     versionBumpPattern = defaultVersionBump,
     noCiMessage,
     publishScript = 'publish',
+    baseCommit = 'HEAD~1',
   }: CiExecutorSchema,
   context: ExecutorContext
 ) {
   versionBumpPattern = { ...defaultVersionBump, ...versionBumpPattern };
+
+  if (process.env.NX_BASE) baseCommit = process.env.NX_BASE;
 
   const git = simpleGit();
 
@@ -80,19 +60,12 @@ export default async function executor(
   await git.checkout(currentBranch);
   await git.pull(`origin`, currentBranch);
 
-  const commitLog = await git.log();
+  const commitLog = await git.log({ from: baseCommit });
 
-  const latestCommit = commitLog.latest;
-  const commitMessage =
-    latestCommit.body.length > 0
-      ? latestCommit.message + '\n' + latestCommit.body
-      : latestCommit.message;
-
-  const { type = 'unknown', breaking = false } = parseCommit(commitMessage);
-
-  const change = breaking
-    ? VersionChangeEnum.major
-    : versionBumpPattern[type] ?? VersionChangeEnum.patch;
+  const change = getVersionBump(
+    commitLog.all as DefaultLogFields[],
+    versionBumpPattern
+  );
 
   const packageJsonPath = path.resolve(
     context.workspace.projects[context.projectName].root,
