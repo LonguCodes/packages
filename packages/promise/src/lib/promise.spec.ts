@@ -4,6 +4,7 @@ jest.mock('class-transformer', () => ({
   plainToInstance: () => plainToClassMock(),
 }));
 import '../index';
+import { faker } from '@faker-js/faker';
 
 describe('Better Promise', () => {
   describe('transform', () => {
@@ -86,6 +87,49 @@ describe('Better Promise', () => {
 
       // Then
       await expect(promise).resolves.toBeInstanceOf(Error1);
+    });
+  });
+  describe('extract', () => {
+    it('should extract value from promise result', async () => {
+      // Given
+      const property = faker.datatype.string();
+      const value = faker.datatype.number();
+      const startPromise = Promise.resolve({ [property]: value });
+
+      // When
+      const resultPromise = startPromise.extract(property);
+
+      // Then
+      await expect(resultPromise).resolves.toBe(value);
+    });
+
+    it('should return undefined when wrong property is provided', async () => {
+      // Given
+      const property = faker.datatype.string();
+      const otherProperty = property + 'Other';
+      const value = faker.datatype.number();
+      const startPromise = Promise.resolve({ [property]: value });
+
+      // When
+      const resultPromise = startPromise.extract(otherProperty);
+
+      // Then
+      await expect(resultPromise).resolves.toBe(undefined);
+    });
+  });
+
+  describe('wrap', () => {
+    it('should wrap value from promise result', async () => {
+      // Given
+      const property = faker.datatype.string();
+      const value = faker.datatype.number();
+      const startPromise = Promise.resolve(value);
+
+      // When
+      const resultPromise = startPromise.wrap(property);
+
+      // Then
+      await expect(resultPromise).resolves.toEqual({ [property]: value });
     });
   });
 });

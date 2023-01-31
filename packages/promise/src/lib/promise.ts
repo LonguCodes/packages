@@ -36,6 +36,19 @@ export class BetterPromise<T> extends Promise<T> {
   failed(): Promise<boolean> {
     return this.then(() => false).catch(() => true);
   }
+  wrap<TProperty extends string | symbol | number>(
+    property: TProperty
+  ): Promise<Record<TProperty, T>> {
+    return this.then(
+      (result) => ({ [property]: result } as Record<TProperty, T>)
+    );
+  }
+
+  extract<TProperty extends keyof T>(
+    property: TProperty
+  ): Promise<T[TProperty]> {
+    return this.then((result) => result[property]);
+  }
 
   then<TResult1 = T, TResult2 = never>(
     onfulfilled?:
