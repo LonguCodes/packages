@@ -19,6 +19,14 @@ declare global {
       to: TDest,
       options?: Partial<TransformOptions>
     ): Promise<InstanceType<TDest>>;
+
+    extract<TProperty extends keyof T>(
+      property: TProperty
+    ): Promise<T[TProperty]>;
+
+    wrap<TProperty extends string | symbol | number>(
+      property: TProperty
+    ): Promise<Record<TProperty, T>>;
   }
 }
 
