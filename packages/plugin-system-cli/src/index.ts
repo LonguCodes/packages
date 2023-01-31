@@ -91,7 +91,6 @@ program
       });
     });
     Logger.info('Command run successfully');
-    console.log(await fs.realpath('.'));
   });
 
 program.parse();
