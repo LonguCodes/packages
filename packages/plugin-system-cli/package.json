@@ -1,6 +1,6 @@
 {
     "name": "@longucodes/plugin-system-cli",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "bin": {
         "plugins-cli": "./src/index.js"
     },
