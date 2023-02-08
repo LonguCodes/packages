@@ -1,6 +1,10 @@
 import { DynamicModule, Logger, Module } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import { PluginDefinition } from '@longucodes/plugin-system-core';
+import {
+  FullPluginDefinition,
+  getFullDefinition,
+  PluginDefinition,
+} from '@longucodes/plugin-system-core';
 import * as process from 'process';
 
 export interface PluginModuleOptions {
@@ -25,21 +29,20 @@ export class PluginModule {
     };
   }
 
-  private static async getModuleFromPlugin(definition: PluginDefinition) {
-    const isStringDefinition = typeof definition == 'string';
-    const name = isStringDefinition ? definition : definition.name;
-    const config = isStringDefinition
-      ? {}
-      : this.resolveConfig(definition.config);
+  private static async getModuleFromPlugin(definition: FullPluginDefinition) {
+    const config = this.resolveConfig(definition.config);
 
     try {
-      const nodeModule = await import(name);
+      const nodeModule = await import(definition.name);
       const nestModuleClass = nodeModule.default;
       return 'forRoot' in nestModuleClass
         ? nestModuleClass.forRoot(config)
         : nestModuleClass;
     } catch (e) {
-      Logger.error(`Failed to load ${name}. Is it installed?`, 'Plugin');
+      Logger.error(
+        `Failed to load ${definition.name}. Is it installed?`,
+        'Plugin'
+      );
       return null;
     }
   }
@@ -47,7 +50,10 @@ export class PluginModule {
   private static async getPluginList(path: string) {
     try {
       await fs.access(path);
-      return JSON.parse((await fs.readFile(path)).toString());
+      const rawPlugins: PluginDefinition[] = JSON.parse(
+        (await fs.readFile(path)).toString()
+      );
+      return rawPlugins.map(getFullDefinition);
     } catch (e) {
       return [];
     }
@@ -56,7 +62,7 @@ export class PluginModule {
   public static async forRoot(
     options: PluginModuleOptions
   ): Promise<DynamicModule> {
-    const pluginDefinitions: PluginDefinition[] = await this.getPluginList(
+    const pluginDefinitions: FullPluginDefinition[] = await this.getPluginList(
       options.pluginsDefinitionFilePath
     );
 
