@@ -3,15 +3,17 @@
 import { program } from 'commander';
 import { Logger } from '@longucodes/common';
 import * as fs from 'fs/promises';
-import { PluginDefinition } from '@longucodes/plugin-system-core';
+import {
+  FullPluginDefinition,
+  getFullDefinition,
+  PluginDefinition,
+} from '@longucodes/plugin-system-core';
 import * as child_process from 'child_process';
 import { promisify } from 'util';
-async function checkIfInstalled(definition: PluginDefinition) {
-  const isStringDefinition = typeof definition === 'string';
-  const name = isStringDefinition ? definition : definition.name;
-  if (!isStringDefinition && definition.mode === 'dynamic') return true;
+async function checkIfInstalled(definition: FullPluginDefinition) {
+  if (definition.mode === 'dynamic') return true;
   try {
-    await import(name);
+    await import(definition.name);
     return true;
   } catch (e) {
     return false;
@@ -42,12 +44,14 @@ program
         'Plugins file does not exist or cannot be accessed, skipping'
       );
     } else {
-      let plugins: PluginDefinition[] = [];
+      let rawPlugins: PluginDefinition[] = [];
       try {
-        plugins = JSON.parse((await fs.readFile(pluginsPath)).toString());
+        rawPlugins = JSON.parse((await fs.readFile(pluginsPath)).toString());
       } catch (e) {
         Logger.error('Plugins file malformed, skipping');
       }
+
+      const plugins: FullPluginDefinition[] = rawPlugins.map(getFullDefinition);
 
       Logger.info('Checking for plugin changes...');
       const missingPlugins = (
@@ -62,11 +66,15 @@ program
         .map(({ plugin }) => plugin);
 
       if (missingPlugins.length > 0) {
-        Logger.info(`Missing plugins: ${missingPlugins.join(', ')}`);
+        Logger.info(
+          `Missing plugins: ${missingPlugins
+            .map((plugin) => plugin.name)
+            .join(', ')}`
+        );
         Logger.info(`Installing...`);
 
         await promisify(child_process.exec)(
-          `${cli} ${missingPlugins.join(' ')}`
+          `${cli} ${missingPlugins.map((plugin) => plugin.name).join(' ')}`
         );
 
         Logger.info('Plugins successfully installed');
