@@ -18,7 +18,9 @@ declare global {
     transform<TDest extends Type>(
       to: TDest,
       options?: Partial<TransformOptions>
-    ): Promise<InstanceType<TDest>>;
+    ): Promise<
+      T extends Array<any> ? InstanceType<TDest>[] : InstanceType<TDest>
+    >;
 
     extract<TProperty extends keyof T>(
       property: TProperty
@@ -27,6 +29,8 @@ declare global {
     wrap<TProperty extends string | symbol | number>(
       property: TProperty
     ): Promise<Record<TProperty, T>>;
+
+    tap(callback: (value: T) => void): Promise<T>;
   }
 }
 

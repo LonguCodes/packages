@@ -32,7 +32,7 @@ describe('Better Promise', () => {
       const promise = Promise.reject({ test: 1 });
 
       // When
-      await promise.transform(undefined).catch(function () {});
+      await promise.transform(undefined).catch();
 
       // Then
       expect(plainToClassMock).not.toBeCalled();
