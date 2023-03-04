@@ -27,7 +27,9 @@ export class BetterPromise<T> extends Promise<T> {
   transform<TDest extends Type>(
     to: TDest,
     options: Partial<TransformOptions> = {}
-  ): Promise<InstanceType<TDest>> {
+  ): Promise<
+    T extends Array<any> ? InstanceType<TDest>[] : InstanceType<TDest>
+  > {
     return this.then((value) =>
       plainToInstance(to, value, { excludeExtraneousValues: true, ...options })
     );
@@ -64,5 +66,12 @@ export class BetterPromise<T> extends Promise<T> {
       this,
       super.then(onfulfilled, onrejected)
     ) as unknown as Promise<TResult1 | TResult2>;
+  }
+
+  tap(callback: (value: T) => void): Promise<T> {
+    return this.then((value) => {
+      callback(value);
+      return value;
+    });
   }
 }
