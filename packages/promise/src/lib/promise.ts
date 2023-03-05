@@ -71,6 +71,28 @@ export class BetterPromise<T> extends Promise<T> {
     ) as unknown as Promise<TResult1 | TResult2>;
   }
 
+  define<TProperty extends string | symbol | number, TValue>(
+    property: TProperty,
+    value: TValue | ((value: T) => TValue)
+  ): Promise<T & Record<TProperty, TValue>> {
+    return this.then((promiseValue) => {
+      (promiseValue as Record<TProperty, TValue>)[property] =
+        typeof value === 'function'
+          ? (value as (value: T) => TValue)(promiseValue)
+          : (value as TValue);
+      return promiseValue as T & Record<TProperty, TValue>;
+    });
+  }
+
+  remove<TProperty extends keyof T>(
+    property: TProperty
+  ): Promise<Omit<T, TProperty>> {
+    return this.then((value) => {
+      delete value[property];
+      return value;
+    });
+  }
+
   tap(callback: (value: T) => void): Promise<T> {
     return this.then((value) => {
       callback(value);

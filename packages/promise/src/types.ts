@@ -30,6 +30,20 @@ declare global {
       property: TProperty
     ): Promise<Record<TProperty, T>>;
 
+    define<TProperty extends string | symbol | number, TValue>(
+      property: TProperty,
+      value: TValue
+    ): Promise<T & Record<TProperty, TValue>>;
+
+    define<TProperty extends string | symbol | number, TValue>(
+      property: TProperty,
+      valueFunction: (value: T) => TValue
+    ): Promise<T & Record<TProperty, TValue>>;
+
+    remove<TProperty extends keyof T>(
+      property: TProperty
+    ): Promise<Omit<T, TProperty>>;
+
     tap(callback: (value: T) => void): Promise<T>;
   }
 }
