@@ -3,10 +3,29 @@ let plainToClassMock;
 jest.mock('class-transformer', () => ({
   plainToInstance: () => plainToClassMock(),
 }));
+const basePromise = Promise;
+
 import '../index';
 import { faker } from '@faker-js/faker';
+import { BetterPromise } from './promise';
 
 describe('Better Promise', () => {
+  it('Promise.resolve should return better promise', () => {
+    expect(basePromise.resolve()).toBeInstanceOf(BetterPromise);
+  });
+
+  it('Promise.reject should return better promise', () => {
+    expect(basePromise.reject()).toBeInstanceOf(BetterPromise);
+  });
+
+  it('Promise.all should return better promise', () => {
+    expect(basePromise.all([])).toBeInstanceOf(BetterPromise);
+  });
+
+  it('Promise.race should return better promise', () => {
+    expect(basePromise.race([])).toBeInstanceOf(BetterPromise);
+  });
+
   describe('transform', () => {
     beforeEach(() => {
       plainToClassMock = jest.fn();
@@ -32,7 +51,7 @@ describe('Better Promise', () => {
       const promise = Promise.reject({ test: 1 });
 
       // When
-      await promise.transform(undefined).catch();
+      await promise.transform(undefined).catch(() => {});
 
       // Then
       expect(plainToClassMock).not.toBeCalled();
