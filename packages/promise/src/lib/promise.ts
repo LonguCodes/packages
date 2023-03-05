@@ -74,4 +74,9 @@ export class BetterPromise<T> extends Promise<T> {
       return value;
     });
   }
+
+  static from<T>(promise: Promise<T>) {
+    if (promise instanceof BetterPromise) return promise;
+    return BetterPromise.resolve().then(() => promise);
+  }
 }
