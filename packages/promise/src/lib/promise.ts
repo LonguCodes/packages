@@ -2,6 +2,9 @@ import 'reflect-metadata';
 import { plainToInstance } from 'class-transformer';
 import { rewriteClass } from './rewrite-class';
 
+const BasePromiseAll = Promise.all;
+const BasePromiseRace = Promise.race;
+
 export class BetterPromise<T> extends Promise<T> {
   rethrowMap = new Map<Type<Error>, Type<Error>>();
 
@@ -76,7 +79,22 @@ export class BetterPromise<T> extends Promise<T> {
   }
 
   static from<T>(promise: Promise<T>) {
-    if (promise instanceof BetterPromise) return promise;
-    return BetterPromise.resolve().then(() => promise);
+    if (promise instanceof BetterPromise) return promise as BetterPromise<T>;
+    return BetterPromise.resolve<T>().then(() => promise);
+  }
+
+  static resolve<T>(value?: T | PromiseLike<T>): Promise<T> {
+    return new BetterPromise<T>((resolve) => resolve(value));
+  }
+  static reject<T>(value?: T | PromiseLike<T>): Promise<T> {
+    return new BetterPromise<T>((resolve, reject) => reject(value));
+  }
+
+  static all<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>[]> {
+    return BetterPromise.from(BasePromiseAll.call(this, values));
+  }
+
+  static race<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>> {
+    return BetterPromise.from(BasePromiseRace.call(this, values));
   }
 }
