@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { plainToInstance } from 'class-transformer';
+import { ClassTransformOptions, plainToInstance } from 'class-transformer';
 import { rewriteClass } from './rewrite-class';
 
 const BasePromiseAll = Promise.all;
@@ -29,7 +29,7 @@ export class BetterPromise<T> extends Promise<T> {
 
   transform<TDest extends Type>(
     to: TDest,
-    options: Partial<TransformOptions> = {}
+    options: Partial<ClassTransformOptions> = {}
   ): Promise<
     T extends Array<any> ? InstanceType<TDest>[] : InstanceType<TDest>
   > {

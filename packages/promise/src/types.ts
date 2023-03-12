@@ -1,3 +1,5 @@
+import {ClassTransformOptions} from "class-transformer";
+
 declare global {
   interface Type<T = any> extends Function {
     new (...args: any[]): T;
@@ -17,7 +19,7 @@ declare global {
 
     transform<TDest extends Type>(
       to: TDest,
-      options?: Partial<TransformOptions>
+      options?: Partial<ClassTransformOptions>
     ): Promise<
       T extends Array<any> ? InstanceType<TDest>[] : InstanceType<TDest>
     >;
