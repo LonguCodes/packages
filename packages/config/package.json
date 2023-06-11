@@ -1,4 +1,14 @@
 {
-    "name": "@longucodes/config",
-    "version": "1.1.8"
+  "name": "@longucodes/config",
+  "version": "1.1.8",
+  "repository": {
+    "url": "https://github.com/LonguCodes/packages",
+    "type": "git",
+    "directory": "packages/config"
+  },
+  "homepage": "https://github.com/LonguCodes/packages/tree/master/packages/config",
+  "bugs": {
+    "url": "https://github.com/LonguCodes/packages/issues"
+  },
+  "license": "MIT"
 }
