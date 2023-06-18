@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
-import { Options } from 'amqplib/properties';
+import { Options } from 'amqplib';
 
 interface BasePubOptions {
   options?: Options.Publish;
