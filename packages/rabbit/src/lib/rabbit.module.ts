@@ -11,7 +11,7 @@ import { DiscoveryModule, DiscoveryService, Reflector } from '@nestjs/core';
 import { SubOptions, SUBSCRIBE_KEY } from './decorators/subscribe.decorator';
 import * as amqplib from 'amqplib';
 import { Channel, Connection } from 'amqplib';
-import { ConsumeMessage, Options } from 'amqplib/properties';
+import { ConsumeMessage, Options } from 'amqplib';
 import { v4 } from 'uuid';
 import { MESSAGE_KEY } from './decorators/message.decorator';
 import { ParseFailedError } from './errors/parse-failed.error';
