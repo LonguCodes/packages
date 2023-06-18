@@ -234,6 +234,7 @@ export class RabbitModule implements OnModuleInit, OnModuleDestroy {
       controllerInstance[listenerName]
     );
     if (
+      pubOptions &&
       'queueToken' in pubOptions &&
       !(pubOptions.queueToken in this.queueMapping)
     )
