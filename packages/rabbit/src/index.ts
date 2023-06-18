@@ -6,3 +6,4 @@ export {
 export { Sub } from './lib/decorators/subscribe.decorator';
 export { Pub } from './lib/decorators/publish.decorator';
 export { RabbitModule } from './lib/rabbit.module';
+export * from './lib/rabbit-message.publisher';

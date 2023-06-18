@@ -17,8 +17,13 @@ import { MESSAGE_KEY } from './decorators/message.decorator';
 import { ParseFailedError } from './errors/parse-failed.error';
 import { PUBLISH_KEY, PubOptions } from './decorators/publish.decorator';
 import { QueueConfigMissingError } from './errors/queue-config-missing.error';
-import { RABBIT_CHANNEL_KEY, RABBIT_CONNECTION_KEY } from './tokens';
+import {
+  RABBIT_CHANNEL_KEY,
+  RABBIT_CONNECTION_KEY,
+  RABBIT_QUEUES_KEY,
+} from './tokens';
 import { ModuleOptionsFactory } from '@longucodes/common';
+import { RabbitMessagePublisher } from './rabbit-message.publisher';
 
 export interface RabbitModuleExchange {
   name: string;
@@ -43,7 +48,6 @@ export interface RabbitModuleOptions {
 }
 
 const RABBIT_CONFIG_KEY = Symbol('rabbit-config');
-const RABBIT_QUEUES_KEY = Symbol('rabbit-queues');
 
 @Module({
   imports: [DiscoveryModule],
@@ -57,6 +61,7 @@ export class RabbitModule implements OnModuleInit, OnModuleDestroy {
       module: RabbitModule,
       global: options.global,
       providers: [
+        RabbitMessagePublisher,
         {
           provide: RABBIT_CONNECTION_KEY,
           useFactory: async () => {
@@ -97,6 +102,7 @@ export class RabbitModule implements OnModuleInit, OnModuleDestroy {
               }, {}) ?? [],
         },
       ],
+      exports: [RabbitMessagePublisher],
     };
   }
 
@@ -108,6 +114,7 @@ export class RabbitModule implements OnModuleInit, OnModuleDestroy {
       global: options.global,
       imports: options.imports,
       providers: [
+        RabbitMessagePublisher,
         {
           inject: [RABBIT_CONFIG_KEY],
           provide: RABBIT_CONNECTION_KEY,
@@ -151,6 +158,7 @@ export class RabbitModule implements OnModuleInit, OnModuleDestroy {
               }, {}),
         },
       ],
+      exports: [RabbitMessagePublisher],
     };
   }
 
