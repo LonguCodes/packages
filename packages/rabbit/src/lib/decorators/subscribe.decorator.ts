@@ -1,18 +1,12 @@
 import { SetMetadata } from '@nestjs/common';
 
-export interface TokenSubOptions {
-  exchange?: string;
-  routingKey?: string;
-  queueToken?: string | symbol;
-}
-
-export interface QueueSubOptions {
-  exchange?: string;
-  routingKey?: string;
-  queue?: string;
-}
-
-export type SubOptions = TokenSubOptions | QueueSubOptions;
+export type SubOptions =
+  | {
+      exchange: string;
+      routingKey: string;
+      queue?: string | symbol;
+    }
+  | { queue: string | symbol };
 
 export const SUBSCRIBE_KEY = Symbol('subscribe');
 

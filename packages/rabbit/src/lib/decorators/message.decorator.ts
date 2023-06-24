@@ -2,7 +2,7 @@ export const MESSAGE_KEY = Symbol('message');
 
 function DecorateParameter<TValue>(key: string | symbol, value: TValue) {
   return (
-    target: Object,
+    target: object,
     propertyKey: string | symbol,
     parameterIndex: number
   ) => {
