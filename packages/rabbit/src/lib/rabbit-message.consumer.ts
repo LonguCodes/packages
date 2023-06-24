@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RABBIT_CHANNEL_KEY, RABBIT_QUEUES_KEY } from './tokens';
 import { Channel, ConsumeMessage, Options } from 'amqplib';
-import { NameResolver } from '../name.resolver';
+import { NameResolver } from './name.resolver';
 import { v4 } from 'uuid';
 import { TemporaryQueueRegistry } from './temporary-queue.registry';
 

@@ -22,7 +22,7 @@ import {
 import { ModuleOptionsFactory } from '@longucodes/common';
 import { RabbitMessagePublisher } from './rabbit-message.publisher';
 import { RABBIT_CONFIG_KEY } from './tokens.internal';
-import { NameResolver } from '../name.resolver';
+import { NameResolver } from './name.resolver';
 import { RabbitMessageConsumer } from './rabbit-message.consumer';
 import { TemporaryQueueRegistry } from './temporary-queue.registry';
 
