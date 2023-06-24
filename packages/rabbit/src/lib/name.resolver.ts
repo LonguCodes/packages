@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { RabbitModuleOptions } from './lib/rabbit.module';
-import { RABBIT_CONFIG_KEY } from './lib/tokens.internal';
-import { RABBIT_QUEUES_KEY } from './lib/tokens';
+import { RabbitModuleOptions } from './rabbit.module';
+import { RABBIT_CONFIG_KEY } from './tokens.internal';
+import { RABBIT_QUEUES_KEY } from './tokens';
 
 @Injectable()
 export class NameResolver {

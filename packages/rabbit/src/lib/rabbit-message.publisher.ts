@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RABBIT_CHANNEL_KEY, RABBIT_QUEUES_KEY } from './tokens';
 import { Channel, Options } from 'amqplib';
-import { NameResolver } from '../name.resolver';
+import { NameResolver } from './name.resolver';
 
 @Injectable()
 export class RabbitMessagePublisher {
