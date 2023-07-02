@@ -12,6 +12,27 @@ export class RabbitMessageConsumer {
     private readonly nameResolver: NameResolver,
     private readonly queueRegistry: TemporaryQueueRegistry
   ) {}
+
+  public async consumeTemporaryQueue<T>(
+    callback: (message: T, rawMessage: ConsumeMessage) => void | Promise<void>,
+    options?: Options.Consume
+  ): Promise<string> {
+    const queueName = this.nameResolver.getQueueName(v4());
+
+    await this.channel.assertQueue(queueName);
+    await this.queueRegistry.register(queueName);
+
+    await this.channel.consume(
+      queueName,
+      async (message) => {
+        await callback(JSON.parse(message.content.toString()), message);
+        this.channel.ack(message);
+      },
+      options
+    );
+    return queueName;
+  }
+
   public async consumeQueue<T>(
     queue: string | symbol,
     callback: (message: T, rawMessage: ConsumeMessage) => void | Promise<void>,
