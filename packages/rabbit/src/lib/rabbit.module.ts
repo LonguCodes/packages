@@ -111,7 +111,7 @@ export class RabbitModule implements OnModuleInit {
                   null
                 ).resolveConfigPrefix(queue.name);
                 return curr;
-              }, {}) ?? [],
+              }, {}) ?? {},
         },
       ],
     };
