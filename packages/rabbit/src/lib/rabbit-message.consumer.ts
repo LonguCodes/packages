@@ -76,7 +76,8 @@ export class RabbitMessageConsumer {
       await callback(JSON.parse(message.content.toString()), message);
       this.channel.ack(message);
     } catch (e) {
-      Logger.log(e, 'Rabbit');
+      Logger.error(e, 'Rabbit');
+      Logger.debug(e.stack, 'Rabbit');
       if (e instanceof NackEvent) this.channel.nack(message);
       else this.channel.ack(message);
     }
