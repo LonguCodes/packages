@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { RABBIT_CHANNEL_KEY, RABBIT_QUEUES_KEY } from './tokens';
 import { Channel, ConsumeMessage, Options } from 'amqplib';
 import { NameResolver } from './name.resolver';
 import { v4 } from 'uuid';
 import { TemporaryQueueRegistry } from './temporary-queue.registry';
+import { NackEvent } from './errors/nack-event';
 
 @Injectable()
 export class RabbitMessageConsumer {
@@ -20,14 +21,11 @@ export class RabbitMessageConsumer {
     const queueName = this.nameResolver.getQueueName(v4());
 
     await this.channel.assertQueue(queueName);
-    await this.queueRegistry.register(queueName);
+    this.queueRegistry.register(queueName);
 
     await this.channel.consume(
       queueName,
-      async (message) => {
-        await callback(JSON.parse(message.content.toString()), message);
-        this.channel.ack(message);
-      },
+      async (message) => this.executeCallbackWithMessage(callback, message),
       options
     );
     return queueName;
@@ -42,10 +40,7 @@ export class RabbitMessageConsumer {
 
     await this.channel.consume(
       queueName,
-      async (message) => {
-        await callback(JSON.parse(message.content.toString()), message);
-        this.channel.ack(message);
-      },
+      async (message) => this.executeCallbackWithMessage(callback, message),
       options
     );
   }
@@ -59,17 +54,31 @@ export class RabbitMessageConsumer {
     const queueName = this.nameResolver.getQueueName(v4());
 
     await this.channel.assertQueue(queueName);
-    await this.queueRegistry.register(queueName);
+    this.queueRegistry.register(queueName);
 
     await this.channel.bindQueue(queueName, exchange, key);
 
     await this.channel.consume(
       queueName,
-      async (message) => {
-        await callback(JSON.parse(message.content.toString()), message);
-        this.channel.ack(message);
-      },
+      (message) => this.executeCallbackWithMessage(callback, message),
       options
     );
+  }
+
+  private async executeCallbackWithMessage(
+    callback: (
+      message: any,
+      rawMessage: ConsumeMessage
+    ) => void | Promise<void>,
+    message: ConsumeMessage
+  ) {
+    try {
+      await callback(JSON.parse(message.content.toString()), message);
+      this.channel.ack(message);
+    } catch (e) {
+      Logger.log(e, 'Rabbit');
+      if (e instanceof NackEvent) this.channel.nack(message);
+      else this.channel.ack(message);
+    }
   }
 }
