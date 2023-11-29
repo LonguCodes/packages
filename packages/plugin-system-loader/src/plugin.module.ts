@@ -4,6 +4,7 @@ import {
   FullPluginDefinition,
   getFullDefinition,
   PluginDefinition,
+  PluginModuleInterface,
 } from '@longucodes/plugin-system-core';
 import * as process from 'process';
 import { RouterModule } from '@nestjs/core';
@@ -47,13 +48,13 @@ export class PluginModule {
           : nestModuleClass;
       if (!moduleInstance) return null;
 
-      const moduleMetadataSource =
+      const moduleMetadataSource: PluginModuleInterface =
         moduleType === 'dynamic' ? moduleInstance.module : moduleInstance;
 
-      if (pathGenerator && moduleMetadataSource.name)
+      if (pathGenerator && moduleMetadataSource.pluginName)
         moduleInstance = RouterModule.register([
           {
-            path: pathGenerator(moduleMetadataSource.name),
+            path: pathGenerator(moduleMetadataSource.pluginName),
             module: moduleInstance,
           },
         ]);
