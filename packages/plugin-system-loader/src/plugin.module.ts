@@ -40,15 +40,20 @@ export class PluginModule {
     try {
       const nodeModule = await import(definition.name);
       const nestModuleClass = nodeModule.default;
+      const moduleType = 'forRoot' in nestModuleClass ? 'dynamic' : 'static';
       let moduleInstance =
-        'forRoot' in nestModuleClass
+        moduleType === 'dynamic'
           ? await nestModuleClass.forRoot(config)
           : nestModuleClass;
       if (!moduleInstance) return null;
-      if (pathGenerator)
+
+      const moduleMetadataSource =
+        moduleType === 'dynamic' ? moduleInstance.module : moduleInstance;
+
+      if (pathGenerator && moduleMetadataSource.name)
         moduleInstance = RouterModule.register([
           {
-            path: pathGenerator(definition.name),
+            path: pathGenerator(moduleMetadataSource.name),
             module: moduleInstance,
           },
         ]);
