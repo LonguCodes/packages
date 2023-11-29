@@ -6,9 +6,11 @@ import {
   PluginDefinition,
 } from '@longucodes/plugin-system-core';
 import * as process from 'process';
+import { RouterModule } from '@nestjs/core';
 
 export interface PluginModuleOptions {
   pluginsDefinitionFilePath?: string;
+  controllerPathPrefixTransformer?: (moduleName: string) => string;
 }
 
 @Module({})
@@ -29,15 +31,28 @@ export class PluginModule {
     };
   }
 
-  private static async getModuleFromPlugin(definition: FullPluginDefinition) {
+  private static async getModuleFromPlugin(
+    definition: FullPluginDefinition,
+    pathGenerator?: (moduleName: string) => string
+  ) {
     const config = this.resolveConfig(definition.config);
 
     try {
       const nodeModule = await import(definition.name);
       const nestModuleClass = nodeModule.default;
-      return 'forRoot' in nestModuleClass
-        ? nestModuleClass.forRoot(config)
-        : nestModuleClass;
+      let moduleInstance =
+        'forRoot' in nestModuleClass
+          ? await nestModuleClass.forRoot(config)
+          : nestModuleClass;
+      if (!moduleInstance) return null;
+      if (pathGenerator)
+        moduleInstance = RouterModule.register([
+          {
+            path: pathGenerator(definition.name),
+            module: moduleInstance,
+          },
+        ]);
+      return moduleInstance;
     } catch (e) {
       Logger.error(
         `Failed to load ${definition.name}. Is it installed?`,
@@ -68,7 +83,10 @@ export class PluginModule {
 
     const modules = await Promise.all(
       pluginDefinitions.map((definition) =>
-        this.getModuleFromPlugin(definition)
+        this.getModuleFromPlugin(
+          definition,
+          options.controllerPathPrefixTransformer
+        )
       )
     );
 
