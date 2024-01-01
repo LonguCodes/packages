@@ -1,4 +1,4 @@
-import {ClassTransformOptions} from "class-transformer";
+import { ClassTransformOptions } from 'class-transformer';
 
 declare global {
   interface Type<T = any> extends Function {
@@ -47,6 +47,7 @@ declare global {
     ): Promise<Omit<T, TProperty>>;
 
     tap(callback: (value: T) => void): Promise<T>;
+    map<TDest>(mapFn: (currentValue: T) => TDest): Promise<TDest>;
   }
 }
 

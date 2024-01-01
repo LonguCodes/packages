@@ -38,6 +38,10 @@ export class BetterPromise<T> extends Promise<T> {
     );
   }
 
+  map<TDest>(mapFn: (currentValue: T) => TDest): Promise<TDest> {
+    return this.then((value) => mapFn(value));
+  }
+
   failed(): Promise<boolean> {
     return this.then(() => false).catch(() => true);
   }
