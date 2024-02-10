@@ -36,6 +36,8 @@ jobs:
 
       - name: Compute actually changed files
         run: |
+          git config user.email "ci@ci.com"
+          git config user.name "CI"
           git cherry-pick --abort || true
           export NX_CURRENT_BRANCH=`git branch --show-current`
           git checkout $NX_BASE
