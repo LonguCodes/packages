@@ -8,6 +8,7 @@ import {
 } from '@longucodes/plugin-system-core';
 import * as process from 'process';
 import { RouterModule } from '@nestjs/core';
+import { fork, sift } from 'radash';
 
 export interface PluginModuleOptions {
   pluginsDefinitionFilePath?: string;
@@ -32,17 +33,16 @@ export class PluginModule {
     };
   }
 
-  private static async getModuleFromPlugin(
-    definition: FullPluginDefinition,
-    pathGenerator?: (moduleName: string) => string
-  ) {
+  private static async getModuleWithMetadataFromPlugin(
+    definition: FullPluginDefinition
+  ): Promise<[any, { pluginName?: string }]> {
     const config = this.resolveConfig(definition.config);
 
     try {
       const nodeModule = await import(definition.name);
       const nestModuleClass = nodeModule.default;
       const moduleType = 'forRoot' in nestModuleClass ? 'dynamic' : 'static';
-      let moduleInstance =
+      const moduleInstance =
         moduleType === 'dynamic'
           ? await nestModuleClass.forRoot(config)
           : nestModuleClass;
@@ -51,14 +51,7 @@ export class PluginModule {
       const moduleMetadataSource: PluginModuleInterface =
         moduleType === 'dynamic' ? moduleInstance.module : moduleInstance;
 
-      if (pathGenerator && moduleMetadataSource.pluginName)
-        moduleInstance = RouterModule.register([
-          {
-            path: pathGenerator(moduleMetadataSource.pluginName),
-            module: moduleInstance,
-          },
-        ]);
-      return moduleInstance;
+      return [moduleInstance, moduleMetadataSource];
     } catch (e) {
       Logger.error(
         `Failed to load ${definition.name}. Is it installed?`,
@@ -87,18 +80,30 @@ export class PluginModule {
       options.pluginsDefinitionFilePath
     );
 
-    const modules = await Promise.all(
-      pluginDefinitions.map((definition) =>
-        this.getModuleFromPlugin(
-          definition,
-          options.controllerPathPrefixTransformer
+    const modules = sift(
+      await Promise.all(
+        pluginDefinitions.map((definition) =>
+          this.getModuleWithMetadataFromPlugin(definition)
         )
       )
     );
 
+    const [routableModules, nonRoutableModule] = fork(
+      modules,
+      (module) => !!module[1].pluginName
+    );
+
     return {
       module: PluginModule,
-      imports: modules.filter((module) => module),
+      imports: [
+        ...nonRoutableModule.map(([module]) => module),
+        RouterModule.register(
+          routableModules.map(([module, metadata]) => ({
+            module,
+            path: metadata.pluginName,
+          }))
+        ),
+      ],
       global: false,
     };
   }
