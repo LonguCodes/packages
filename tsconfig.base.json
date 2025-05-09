@@ -17,6 +17,9 @@
     "paths": {
       "@longucodes/common": ["packages/common/src/index.ts"],
       "@longucodes/config": ["packages/config/src/index.ts"],
+      "@longucodes/hono-decorators": [
+        "packages/hono-decorators/src/index.ts"
+      ],
       "@longucodes/nx-package-builder": [
         "packages/nx-package-builder/src/index.ts"
       ],
