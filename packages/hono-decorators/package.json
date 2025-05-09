@@ -1,17 +1,17 @@
 {
-  "name": "@longucodes/hono-decorators",
-  "version": "0.0.1",
-  "dependencies": {
-    "hono": "~4.7.9"
-  },
-  "repository": {
-    "url": "https://github.com/LonguCodes/packages",
-    "type": "git",
-    "directory": "packages/hono-decorators"
-  },
-  "homepage": "https://github.com/LonguCodes/packages/tree/master/packages/hono-decorators",
-  "bugs": {
-    "url": "https://github.com/LonguCodes/packages/issues"
-  },
-  "license": "MIT"
+    "name": "@longucodes/hono-decorators",
+    "version": "0.0.2",
+    "dependencies": {
+        "hono": "~4.7.9"
+    },
+    "repository": {
+        "url": "https://github.com/LonguCodes/packages",
+        "type": "git",
+        "directory": "packages/hono-decorators"
+    },
+    "homepage": "https://github.com/LonguCodes/packages/tree/master/packages/hono-decorators",
+    "bugs": {
+        "url": "https://github.com/LonguCodes/packages/issues"
+    },
+    "license": "MIT"
 }
