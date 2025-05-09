@@ -2,7 +2,7 @@ import {httpConfigStore, type HttpPath} from "./http.config-store";
 import type {Type} from "../types";
 
 export function Route(method: HttpPath['method'], path: string){
-    return (target: object, property: string, descriptor: TypedPropertyDescriptor<any>) => {
+    return (target: object, property: string) => {
         httpConfigStore.paths.add( {
             path,
             method,
