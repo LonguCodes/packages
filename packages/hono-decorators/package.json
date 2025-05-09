@@ -1,6 +1,6 @@
 {
     "name": "@longucodes/hono-decorators",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "dependencies": {
         "hono": "~4.7.9",
         "reflect-metadata": "^0.2.2"
