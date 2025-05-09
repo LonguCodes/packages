@@ -1,7 +1,7 @@
-import type {Type} from "../types.ts";
-import {isConstructor} from "../type-checks.ts";
+import type {Type} from "../types";
+import {isConstructor} from "../type-checks";
 import { v4 } from "uuid";
-import {INJECT_METADATA_KEY} from "./decorators.ts";
+import {INJECT_METADATA_KEY} from "./decorators";
 
 const DI_TOKEN = Symbol("di-token");
 

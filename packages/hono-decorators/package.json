@@ -2,7 +2,8 @@
     "name": "@longucodes/hono-decorators",
     "version": "0.0.2",
     "dependencies": {
-        "hono": "~4.7.9"
+        "hono": "~4.7.9",
+        "reflect-metadata": "^0.2.2"
     },
     "repository": {
         "url": "https://github.com/LonguCodes/packages",
